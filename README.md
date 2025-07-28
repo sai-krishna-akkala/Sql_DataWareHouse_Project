@@ -6,8 +6,7 @@ A comprehensive **Data Warehouse** built using T-SQL to integrate and transform 
 ---
 
 ### 📌 Data Warehouse Architecture
-
-![Data Flow Diagram](https://drive.google.com/file/d/1QQNkvsgi0UXhxKg1r_3Sp33t5enS3O5t/view?usp=sharing)
+![Architecture Diagram](https://drive.google.com/uc?export=view&id=1QQNkvsgi0UXhxKg1r_3Sp33t5enS3O5t)
 
 **Layers:**
 - **Source**: Raw CSV files from CRM & ERP systems  
