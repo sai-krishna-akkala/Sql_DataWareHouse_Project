@@ -1,117 +1,152 @@
-# 🏢 SQL Data Warehouse Project
-A full-stack SQL-based data warehouse project simulating real-world CRM and ERP systems. It processes structured data through a Bronze → Silver → Gold pipeline using T-SQL, ready for use in Business Intelligence tools like Power BI.
+# 🏗️ SQL Data Warehouse Project
 
-This project demonstrates data ingestion, cleansing, transformation, dimensional modeling, and reporting, following industry best practices in naming, modularity, and schema layering.
+## 📌 Overview
 
-
----
-
-## 🧠 Use Case
-
-Simulates a retail business integrating sales, product, and customer datasets to enable:
-
-- 📈 Customer insights & segmentation  
-- 📦 Product performance analysis  
-- 💸 Sales behavior tracking  
-- 📊 Dashboards via Power BI or Tableau
+This project demonstrates the design and implementation of a **SQL-based Data Warehouse** using a layered medallion architecture—**Bronze**, **Silver**, and **Gold**—built on SQL Server. The final output consists of business-ready views suitable for Power BI, Tableau, and other BI tools.
 
 ---
 
-## 📐 Architecture Overview
+## 🎯 Project Objective
 
-The project follows the **Lakehouse-inspired layered architecture:
-
-
-                     ┌─────────────┐
-                     │ Source Data │
-                     └─────┬───────┘
-                           ▼
-                     ┌─────────────┐
-                     │  Bronze     │  ← Raw ingestion
-                     └─────┬───────┘
-                           ▼
-                     ┌─────────────┐
-                     │  Silver     │  ← Cleaning, joins, standardization
-                     └─────┬───────┘
-                           ▼
-                     ┌─────────────┐
-                     │   Gold      │  ← BI-ready views (facts, dims)
-                     └─────────────┘
-
-
-  ## 🔄 Data Flow
-
-### 📥 Bronze Layer
-- Raw data from CRM & ERP systems  
-- No transformation logic — only schema mapping
-
-### ⚙️ Silver Layer
-- Cleaning nulls, whitespaces, and invalid values  
-- Joining CRM & ERP datasets  
-- Type casting and value normalization  
-- Application of business rules  
-
-### 🪙 Gold Layer
-Final analytical views for reporting:
-- `dim_customers`  
-- `dim_products`  
-- `fact_sales`  
+- Ingest raw data from CRM and ERP sources
+- Clean, transform, and standardize it using best practices
+- Maintain referential integrity across dimension and fact tables
+- Build reporting-ready views using the **Star Schema**
+- Enable seamless BI integration
 
 ---
 
-## 🧹 Transformation Breakdown
+## 🧩 Tech Stack
 
-### 🔧 Cleansing Tasks:
-- Remove duplicates  
-- Handle nulls, white spaces  
-- Detect outliers  
-- Filter bad records  
-
-### 🧠 Enrichment & Logic:
-- Derive new keys or columns (e.g., `category_id`)  
-- Integrate data from multiple systems  
-- Normalize values (e.g., country codes)  
-- Format values for consistency (e.g., `prd_line` → `Mountain`)  
+| Component              | Technology        |
+|------------------------|------------------|
+| Database Engine        | SQL Server        |
+| Scripting Language     | T-SQL             |
+| Data Ingestion         | BULK INSERT       |
+| Data Modeling          | Star Schema       |
+| Tools Used             | SSMS, Notepad++, Draw.io |
+| Naming Convention      | `snake_case`      |
 
 ---
 
-## 🗂️ Dataset Dictionary
+## 🔍 Requirement Analysis & Data Exploration
 
-| Table Name           | Layer   | Description                             | Key Fields           |
-|----------------------|---------|------------------------------------------|-----------------------|
-| `crm_cust_info`      | Bronze  | Raw CRM customer master                  | `cst_id`, `cst_key`   |
-| `crm_prd_info`       | Bronze  | Product information                      | `prd_id`, `prd_key`   |
-| `crm_sales_details`  | Bronze  | CRM transactional data                   | `cst_key`, `prd_key`  |
-| `erp_cust_az12`      | Bronze  | ERP customer table                       | `cid`, `gndr`, `cntry`|
-| `erp_loc_a101`       | Bronze  | Location master                          | `loc_id`, `cntry`     |
-| `erp_px_cat_g1v2`    | Bronze  | Product-category mapping                 | `prd_key`, `cat_id`   |
-| `dim_customers`      | Gold    | Final customer dimension                 | `customer_key`        |
-| `dim_products`       | Gold    | Final product dimension                  | `product_key`         |
-| `fact_sales`         | Gold    | Cleaned transactional fact table        | `sls_key`, `prd_id` |
+1. **Source Systems**:
+   - **CRM**: Customer data (ID, names, marital status, gender)
+   - **ERP**: Product, location, and order details
+
+2. **Business Goals**:
+   - Create unified, cleaned customer and product views
+   - Maintain surrogate keys and foreign key consistency
+   - Build reusable ETL pipeline for future scaling
+
+3. **Initial Data Exploration**:
+   - Checked for nulls, duplicates, inconsistent casing
+   - Identified key relationships:
+     - `Customer → Orders`
+     - `Product → Orders`
 
 ---
 
-## 🚀 How to Use
+## 🧱 Layered Architecture Breakdown
 
-### 1️⃣ Clone the Repo
-git clone https://github.com/yourusername/Sql_DataWareHouse_Project.git
-## 🚀 How to Use
+### 🔹 1. Bronze Layer – Raw Data Ingestion
 
-### 2️⃣ Load Raw Tables (Bronze)
-Run the SQL scripts located in the `/bronze/` folder to load raw data from CRM and ERP systems into staging tables.
+**Files**:
+- `02_create_tables_bronze.sql`
+- `03_load_bronze.sql`
 
-### 3️⃣ Apply Transformations (Silver Layer)
-Execute the scripts in the `/silver/` folder to:
-- Join ERP and CRM data sources
-- Clean and standardize the datasets
-- Create intermediate, refined transformation tables
+**Key Actions**:
+- Created staging tables matching the CRM and ERP schema
+- Used `BULK INSERT` to load raw `.csv` files
+- No transformations or constraints applied at this stage
 
-### 4️⃣ Build Final Views (Gold Layer)
-Run the SQL views to generate final analytical tables:
+**Example Tables**:
+- `bronze.crm_cust_info`
+- `bronze.erp_orders`
+- `bronze.erp_products`
+
+---
+
+### 🔸 2. Silver Layer – Data Cleaning & Transformation
+
+**File**: `04_build_silver.sql` (Stored Procedure)
+
+**Key Actions**:
+- Removed duplicates using `ROW_NUMBER()`
+- Trimmed, cleaned, and standardized data (e.g., gender, country codes)
+- Enforced foreign key relationships
+- Applied business logic for formatting, null handling, and enrichment
+
+**Example Tables**:
+- `silver.clean_customers`
+- `silver.clean_products`
+- `silver.clean_orders`
+
+**Transformations Performed**:
+- Uppercasing names and categories
+- Mapping codes (e.g., `'M' → 'Mountain'`)
+- Country standardization (`'US' → 'United States'`)
+- Surrogate key creation
+
+---
+
+### 🟡 3. Gold Layer – Business-Ready Views
+
+**File**: `05_build_gold.sql` (Stored Procedure)
+
+**Key Actions**:
+- Created dimension and fact views using Star Schema principles
+- Used `ROW_NUMBER()` for surrogate keys
+- Joined silver tables to form business-reporting views
+
+**Final Views**:
 - `gold.dim_customers`
 - `gold.dim_products`
-- `gold.fact_sales`
-## 📬 Contact
+- `gold.fact_orders`
 
-🔗 [Connect on LinkedIn](https://www.linkedin.com/in/sai-krishna-akkala07/)  
-📧 Email: saikrishnaakkala9@gmail.com
+These views are optimized for use in BI tools like Power BI, Tableau, or Excel.
+
+---
+
+---
+
+## 📊 BI Output Integration
+
+The following views are available for direct integration:
+
+| View Name           | Description                                |
+|---------------------|--------------------------------------------|
+| `gold.dim_customers` | Customer attributes for analytics (Name, Status, etc.) |
+| `gold.dim_products`  | Product catalog and categories             |
+| `gold.fact_sales`   | Transaction data joining customer-product |
+
+Connect these views to Power BI, Tableau, or Excel for building dashboards.
+
+---
+
+## ✅ Highlights
+
+- ✅ Cleanly staged raw data into the Bronze layer
+- ✅ Robust ETL logic through Stored Procedures
+- ✅ Star schema implementation for analytical queries
+- ✅ Ready for BI tools and reporting systems
+- ✅ Used consistent `snake_case` naming convention throughout
+
+---
+
+## 🙌 Acknowledgments
+
+Built as a hands-on project to demonstrate practical data engineering and data warehouse skills using SQL Server.
+
+Created by **Sai Krishna Akkala**  
+[🔗 GitHub Profile](https://github.com/sai-krishna-akkala)
+contact : saikrishnaakkala9@gmail.com
+## 🔗 Connect with Me on LinkedIn
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-View%20Profile-blue?logo=linkedin)](https://www.linkedin.com/in/sai-krishna-akkala07/)
+
+
+---
+
+
