@@ -16,7 +16,9 @@ A comprehensive **Data Warehouse** built using T-SQL to integrate and transform 
 
 ---
 ### Data Flow 
-![Data Flow Diagram](https://drive.google.com/uc?export=view&id=1PObTRx9JagAKqo7aUtnnYgv3SVwjpaqz)
+## 🧱 Architecture Overview
+
+![Architecture Diagram](https://drive.google.com/uc?export=view&id=1zF0fSYtVYM8qYbR-GLf9MRCj1emOi7wH)
 
 ---
 ### ✅ Key Features
@@ -42,6 +44,10 @@ A comprehensive **Data Warehouse** built using T-SQL to integrate and transform 
 - Standardized country names, product categories
 - Cleaned duplicates and nulls
 - Derived product categories, cost bands
+- ## 🧱 Transformations done 
+
+![Transformations](https://drive.google.com/uc?export=view&id=1zF0fSYtVYM8qYbR-GLf9MRCj1emOi7wH)
+
 
 #### 🥇 Gold Layer
 - `dim_customers`: customer demographics + segmentation  
