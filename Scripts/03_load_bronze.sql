@@ -108,7 +108,7 @@ BEGIN
     PRINT 'Total duration for loading all tables: ' + CAST(DATEDIFF(SECOND, @start_batch, @end_batch) AS NVARCHAR) + ' seconds';
   END TRY
   BEGIN CATCH
-    PRINT '❌ Error occurred while loading tables';
+    PRINT 'Error occurred while loading tables';
     PRINT 'Error message: ' + CAST(ERROR_MESSAGE() AS NVARCHAR);
     PRINT 'Error number: ' + CAST(ERROR_NUMBER() AS NVARCHAR);
   END CATCH
