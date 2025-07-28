@@ -1,0 +1,117 @@
+# 🏢 SQL Data Warehouse Project
+A full-stack SQL-based data warehouse project simulating real-world CRM and ERP systems. It processes structured data through a Bronze → Silver → Gold pipeline using T-SQL, ready for use in Business Intelligence tools like Power BI.
+
+This project demonstrates data ingestion, cleansing, transformation, dimensional modeling, and reporting, following industry best practices in naming, modularity, and schema layering.
+
+
+---
+
+## 🧠 Use Case
+
+Simulates a retail business integrating sales, product, and customer datasets to enable:
+
+- 📈 Customer insights & segmentation  
+- 📦 Product performance analysis  
+- 💸 Sales behavior tracking  
+- 📊 Dashboards via Power BI or Tableau
+
+---
+
+## 📐 Architecture Overview
+
+The project follows the **Lakehouse-inspired layered architecture:
+
+
+                     ┌─────────────┐
+                     │ Source Data │
+                     └─────┬───────┘
+                           ▼
+                     ┌─────────────┐
+                     │  Bronze     │  ← Raw ingestion
+                     └─────┬───────┘
+                           ▼
+                     ┌─────────────┐
+                     │  Silver     │  ← Cleaning, joins, standardization
+                     └─────┬───────┘
+                           ▼
+                     ┌─────────────┐
+                     │   Gold      │  ← BI-ready views (facts, dims)
+                     └─────────────┘
+
+
+  ## 🔄 Data Flow
+
+### 📥 Bronze Layer
+- Raw data from CRM & ERP systems  
+- No transformation logic — only schema mapping
+
+### ⚙️ Silver Layer
+- Cleaning nulls, whitespaces, and invalid values  
+- Joining CRM & ERP datasets  
+- Type casting and value normalization  
+- Application of business rules  
+
+### 🪙 Gold Layer
+Final analytical views for reporting:
+- `dim_customers`  
+- `dim_products`  
+- `fact_sales`  
+
+---
+
+## 🧹 Transformation Breakdown
+
+### 🔧 Cleansing Tasks:
+- Remove duplicates  
+- Handle nulls, white spaces  
+- Detect outliers  
+- Filter bad records  
+
+### 🧠 Enrichment & Logic:
+- Derive new keys or columns (e.g., `category_id`)  
+- Integrate data from multiple systems  
+- Normalize values (e.g., country codes)  
+- Format values for consistency (e.g., `prd_line` → `Mountain`)  
+
+---
+
+## 🗂️ Dataset Dictionary
+
+| Table Name           | Layer   | Description                             | Key Fields           |
+|----------------------|---------|------------------------------------------|-----------------------|
+| `crm_cust_info`      | Bronze  | Raw CRM customer master                  | `cst_id`, `cst_key`   |
+| `crm_prd_info`       | Bronze  | Product information                      | `prd_id`, `prd_key`   |
+| `crm_sales_details`  | Bronze  | CRM transactional data                   | `cst_key`, `prd_key`  |
+| `erp_cust_az12`      | Bronze  | ERP customer table                       | `cid`, `gndr`, `cntry`|
+| `erp_loc_a101`       | Bronze  | Location master                          | `loc_id`, `cntry`     |
+| `erp_px_cat_g1v2`    | Bronze  | Product-category mapping                 | `prd_key`, `cat_id`   |
+| `dim_customers`      | Gold    | Final customer dimension                 | `customer_key`        |
+| `dim_products`       | Gold    | Final product dimension                  | `product_key`         |
+| `fact_sales`         | Gold    | Cleaned transactional fact table        | `sls_key`, `prd_id` |
+
+---
+
+## 🚀 How to Use
+
+### 1️⃣ Clone the Repo
+git clone https://github.com/yourusername/Sql_DataWareHouse_Project.git
+## 🚀 How to Use
+
+### 2️⃣ Load Raw Tables (Bronze)
+Run the SQL scripts located in the `/bronze/` folder to load raw data from CRM and ERP systems into staging tables.
+
+### 3️⃣ Apply Transformations (Silver Layer)
+Execute the scripts in the `/silver/` folder to:
+- Join ERP and CRM data sources
+- Clean and standardize the datasets
+- Create intermediate, refined transformation tables
+
+### 4️⃣ Build Final Views (Gold Layer)
+Run the SQL views to generate final analytical tables:
+- `gold.dim_customers`
+- `gold.dim_products`
+- `gold.fact_sales`
+## 📬 Contact
+
+🔗 [Connect on LinkedIn](https://www.linkedin.com/in/sai-krishna-akkala07/)  
+📧 Email: saikrishnaakkala9@gmail.com
