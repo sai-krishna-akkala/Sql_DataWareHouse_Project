@@ -15,6 +15,9 @@ A comprehensive **Data Warehouse** built using T-SQL to integrate and transform 
 - **Gold**: Final dimensional views for reporting
 
 ---
+### Data Flow 
+![Data Flow Diagram](https://drive.google.com/uc?export=view&id=1PObTRx9JagAKqo7aUtnnYgv3SVwjpaqz)
+
 
 ### ✅ Key Features
 
