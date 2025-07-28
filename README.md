@@ -18,7 +18,7 @@ A comprehensive **Data Warehouse** built using T-SQL to integrate and transform 
 ### Data Flow 
 ![Data Flow Diagram](https://drive.google.com/uc?export=view&id=1PObTRx9JagAKqo7aUtnnYgv3SVwjpaqz)
 
-
+---
 ### ✅ Key Features
 
 - Ingested 6 structured CRM/ERP datasets
